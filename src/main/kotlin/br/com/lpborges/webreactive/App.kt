@@ -1,4 +1,4 @@
-package br.com.lpborges.test
+package br.com.lpborges.webreactive
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
@@ -21,7 +21,7 @@ fun main(args: Array<String>) {
 
 data class Test(var message: String)
 
-@RestController("/test")
+@RestController("/webreactive")
 class TestController {
 
     @PostMapping(consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE),
