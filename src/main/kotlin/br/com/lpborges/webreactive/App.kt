@@ -21,7 +21,7 @@ fun main(args: Array<String>) {
 
 data class Test(var message: String)
 
-@RestController("/webreactive")
+@RestController("/test")
 class TestController {
 
     @PostMapping(consumes = arrayOf(MediaType.APPLICATION_JSON_VALUE),
