@@ -1,3 +1,7 @@
 server:
-  port: 8888
+  port: 8080
 
+spring:
+  jackson:
+    deserialization:
+      FAIL_ON_NULL_FOR_PRIMITIVES: true

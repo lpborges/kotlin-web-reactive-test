@@ -1,3 +1,7 @@
-build/
-.idea/
-tomcat.*/
+/.gradle/
+/.idea/
+/build/
+/out/
+/log/
+
+kotlin-web-reactive-test.iml

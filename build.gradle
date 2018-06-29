@@ -3,50 +3,53 @@ version '1.0-SNAPSHOT'
 
 buildscript {
     ext {
-        kotlin_version = '1.0.4'
-        jackson_version = '2.8.4'
-        spring_boot_version = '2.0.0.BUILD-SNAPSHOT'
-        reactor_version = '3.0.2.RELEASE'
+        kotlinVersion = '1.2.50'
+        springBootVersion = '2.0.3.RELEASE'
     }
     repositories {
         mavenCentral()
-        maven { url 'https://repo.spring.io/libs-snapshot' }
-        maven { url "https://repo.spring.io/milestone" }
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
-        classpath("io.spring.gradle:dependency-management-plugin:0.5.2.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
     }
 }
 
-apply plugin: "java"
-apply plugin: "kotlin"
-apply plugin: "spring-boot"
+apply plugin: 'kotlin'
+apply plugin: 'kotlin-spring'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
-//noinspection GroovyUnusedAssignment
 sourceCompatibility = 1.8
 
-sourceSets {
-    main.java.srcDirs += 'src/main/kotlin'
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "1.8"
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-Xjsr305=strict"]
+        jvmTarget = "1.8"
+    }
 }
 
 repositories {
     mavenCentral()
-    maven { url 'https://repo.spring.io/libs-snapshot' }
-    maven { url "https://repo.spring.io/milestone" }
 }
 
 dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    compile("org.jetbrains.kotlin:kotlin-reflect")
 
-    compile "org.springframework.boot:spring-boot-starter-web"
-    compile "org.springframework.boot.experimental:spring-boot-starter-web-reactive:0.1.0.BUILD-SNAPSHOT"
-    compile "io.projectreactor:reactor-core:$reactor_version"
+    compile("org.springframework.boot:spring-boot-starter-webflux")
 
-    compile "com.fasterxml.jackson.core:jackson-databind:$jackson_version"
-    compile "com.fasterxml.jackson.module:jackson-module-kotlin:$jackson_version"
-    compile "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:$jackson_version"
+    compile("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+    testCompile("com.nhaarman:mockito-kotlin:1.5.0")
 }
